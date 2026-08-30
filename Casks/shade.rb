@@ -8,7 +8,7 @@ cask "shade" do
   homepage "https://github.com/don-san-sec/shade"
 
   depends_on arch: :arm64
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "Shade.app"
 
