@@ -14,9 +14,9 @@ cask "shade" do
 
   # Ad-hoc signed (no Developer ID): clear the quarantine bit so Gatekeeper
   # lets it launch. Remove this once the app is notarized.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", "#{appdir}/Shade.app"]
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args: ["-dr", "com.apple.quarantine", "{{appdir}}/Shade.app"]
   end
 
   # NOTE: /Applications/Shade.app must NOT be in uninstall delete: - the
@@ -24,9 +24,7 @@ cask "shade" do
   # `brew upgrade` fail deterministically: the uninstall stanza deletes the
   # app before Homebrew backs it up to staging.
   uninstall launchctl: "dev.shade.app",
-            delete:    [
-              "~/Library/LaunchAgents/dev.shade.agent.plist",
-            ]
+            delete:    "~/Library/LaunchAgents/dev.shade.agent.plist"
 
   zap trash: "~/.config/shade"
 end
